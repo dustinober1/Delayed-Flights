@@ -1,0 +1,68 @@
+# Git
+.git
+.gitignore
+*.md
+
+# Python
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+env
+pip-log.txt
+pip-delete-this-directory.txt
+.tox
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+.pytest_cache
+
+# Virtual environments
+venv/
+.venv/
+ENV/
+env/
+.env
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Project specific
+notebooks/*.ipynb_checkpoints
+*.tmp
+*.temp
+
+# Large data files (keep structure but exclude large downloads)
+data/raw/*.csv
+data/raw/*.zip
+
+# Logs
+logs/
+*.log
+
+# Documentation (keep essential docs)
+!README.md
+!ANALYSIS_REPORT.md
+
+# Build artifacts
+dist/
+build/
+*.egg-info/

@@ -1,0 +1,77 @@
+version: '3.8'
+
+services:
+  # Main flight delay analysis application
+  flight-delay-app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: flight-delay-analysis
+    volumes:
+      # Mount data directory for persistence
+      - ./data:/app/data
+      - ./logs:/app/logs
+      # Mount source code for development (optional)
+      - ./src:/app/src
+      - ./notebooks:/app/notebooks
+    ports:
+      - "8501:8501"  # Streamlit
+      - "8888:8888"  # Jupyter (if needed)
+    environment:
+      - PYTHONPATH=/app
+      - DATA_DIR=/app/data
+      - LOG_LEVEL=INFO
+    networks:
+      - flight-delay-net
+    restart: unless-stopped
+    command: python run_exploration.py
+
+  # Streamlit web application
+  streamlit-app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: flight-delay-streamlit
+    volumes:
+      - ./data:/app/data
+      - ./app:/app/app
+      - ./src:/app/src
+    ports:
+      - "8502:8501"
+    environment:
+      - PYTHONPATH=/app
+    networks:
+      - flight-delay-net
+    restart: unless-stopped
+    command: streamlit run app/streamlit_app.py --server.port=8501 --server.address=0.0.0.0
+    depends_on:
+      - flight-delay-app
+
+  # Jupyter notebook server (optional for development)
+  jupyter:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: flight-delay-jupyter
+    volumes:
+      - ./notebooks:/app/notebooks
+      - ./data:/app/data
+      - ./src:/app/src
+    ports:
+      - "8889:8888"
+    environment:
+      - PYTHONPATH=/app
+    networks:
+      - flight-delay-net
+    restart: unless-stopped
+    command: jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.token=''
+    profiles:
+      - dev  # Only start with --profile dev
+
+networks:
+  flight-delay-net:
+    driver: bridge
+
+volumes:
+  flight-delay-data:
+    driver: local
