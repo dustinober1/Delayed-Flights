@@ -288,11 +288,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Streamlit team** for the amazing web app framework
 - **Open source contributors** who made this project possible
 
-## 📞 Contact
-
-**Your Name** - your.email@example.com
-
-Project Link: [https://github.com/yourusername/Delayed-Flights](https://github.com/yourusername/Delayed-Flights)
+Project Link: [https://github.com/dustinober1/Delayed-Flights](https://github.com/dustinober1/Delayed-Flights)
 
 ---
 
